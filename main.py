@@ -36,19 +36,28 @@ best_route = ()
 best_dist = float_info.max
 for route in all_routes:
     route_name = []
-    distance = 0
+    dist = 0
     for i in range(len(route)):
         route_name.append(route[i].name)
         if i == 0:
-            distance += calc_dist(queen_mary.lat, queen_mary.long, route[i].lat, route[i].long)
+            dist += calc_dist(queen_mary.lat, queen_mary.long, route[i].lat, route[i].long)
         else:
-            distance += calc_dist(route[i - 1].lat, route[i - 1].long, route[i].lat, route[i].long)
-    distance += calc_dist(route[len(route) - 1].lat, route[len(route) - 1].long, route[i].lat, route[i].long)
-    print(route_name, distance)
-    if distance < best_dist:
-        best_dist = distance
+            dist += calc_dist(route[i - 1].lat, route[i - 1].long, route[i].lat, route[i].long)
+    dist += calc_dist(route[len(route) - 1].lat, route[len(route) - 1].long, queen_mary.lat, queen_mary.long)
+    # print(route_name, dist)
+    if dist < best_dist:
+        best_dist = dist
         best_route = route
 
-for clinic in best_route:
-    print(clinic.name, end=', ')
+leg_list = []
+for i in range(len(best_route)):
+    if i == 0:
+        leg = "Leg " + str(i) + ": Queen Mary Hospital -> " + best_route[i].name
+    else:
+        leg = "Leg " + str(i) + ": " + best_route[i-1].name + " -> " + best_route[i].name
+    leg_list.append(leg)
+leg_list.append("Leg " + str(i) + ": " + best_route[len(best_route) - 1].name + " -> Queen Mary Hospital")
+
+# For print purposes only
+print(leg_list)
 print(best_dist)
