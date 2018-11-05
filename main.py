@@ -48,7 +48,6 @@ for route in all_routes:
         else:
             dist += calc_dist(route[i - 1].lat, route[i - 1].long, route[i].lat, route[i].long)
     dist += calc_dist(route[len(route) - 1].lat, route[len(route) - 1].long, queen_mary.lat, queen_mary.long)
-    # print(route_name, dist)
     if dist < best_dist:
         best_dist = dist
         best_route = route
@@ -60,7 +59,8 @@ for i in range(len(best_route)):
     else:
         leg = "Leg " + str(i+1) + ": " + best_route[i-1].name + " -> " + best_route[i].name
     leg_list.append(leg)
-leg_list.append("Leg " + str(len(best_route)+1) + ": " + best_route[len(best_route) - 1].name + " -> Queen Mary Hospital")
+leg_list.append("Leg " + str(len(best_route)+1) + ": " + best_route[len(best_route) - 1].name +
+                " -> Queen Mary Hospital")
 # End of main program
 
 # For print purposes only
