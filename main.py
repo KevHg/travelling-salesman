@@ -3,6 +3,7 @@ from itertools import permutations
 from sys import float_info
 
 
+# Clinic class containing name, latitude, and longitude
 class Clinic:
     name = ""
     lat = 0
@@ -14,6 +15,7 @@ class Clinic:
         self.long = long
 
 
+# Calculate distance of 2 places from their latitude and longitude
 def calc_dist(lat1, long1, lat2, long2):
     rad = pi / 180.0
     d_long = (long2 - long1) * rad
@@ -24,6 +26,7 @@ def calc_dist(lat1, long1, lat2, long2):
     return distance
 
 
+# Clinic test cases set up
 queen_mary = Clinic("Queen Mary Hospital", 22.243243, 114.153765)
 hku_clinic = Clinic("HKU Clinic", 30, 80)
 central_clinic = Clinic("Central Clinic", 40, 120)
@@ -31,6 +34,7 @@ kowloon_clinic = Clinic("Kowloon Clinic", 80, 60)
 airport_clinic = Clinic("Airport Clinic", 110, 150)
 clinic_list = [hku_clinic, central_clinic, kowloon_clinic, airport_clinic]
 
+# Main program logic begins here
 all_routes = list(permutations(clinic_list))
 best_route = ()
 best_dist = float_info.max
@@ -52,11 +56,12 @@ for route in all_routes:
 leg_list = []
 for i in range(len(best_route)):
     if i == 0:
-        leg = "Leg " + str(i) + ": Queen Mary Hospital -> " + best_route[i].name
+        leg = "Leg " + str(i+1) + ": Queen Mary Hospital -> " + best_route[i].name
     else:
-        leg = "Leg " + str(i) + ": " + best_route[i-1].name + " -> " + best_route[i].name
+        leg = "Leg " + str(i+1) + ": " + best_route[i-1].name + " -> " + best_route[i].name
     leg_list.append(leg)
-leg_list.append("Leg " + str(len(best_route)) + ": " + best_route[len(best_route) - 1].name + " -> Queen Mary Hospital")
+leg_list.append("Leg " + str(len(best_route)+1) + ": " + best_route[len(best_route) - 1].name + " -> Queen Mary Hospital")
+# End of main program
 
 # For print purposes only
 print(leg_list)
