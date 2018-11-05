@@ -56,7 +56,7 @@ for i in range(len(best_route)):
     else:
         leg = "Leg " + str(i) + ": " + best_route[i-1].name + " -> " + best_route[i].name
     leg_list.append(leg)
-leg_list.append("Leg " + str(i) + ": " + best_route[len(best_route) - 1].name + " -> Queen Mary Hospital")
+leg_list.append("Leg " + str(len(best_route)) + ": " + best_route[len(best_route) - 1].name + " -> Queen Mary Hospital")
 
 # For print purposes only
 print(leg_list)
