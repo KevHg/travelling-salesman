@@ -1,6 +1,7 @@
 from math import sin, cos, atan2, sqrt, pi
 from itertools import permutations
 from sys import float_info
+from copy import deepcopy
 
 
 # Clinic class containing name, latitude, and longitude
@@ -26,15 +27,49 @@ def calc_dist(lat1, long1, lat2, long2):
     return distance
 
 
+def print_clinics(clinic_list):
+    for clinic in clinic_list:
+        print(clinic.name, ",", end='')
+    print()
+
+
+def calc_cost(test_list, end):
+    if len(test_list) == 2:
+        return calc_dist(test_list[0].lat, test_list[0].long, test_list[1].lat, test_list[1].long)
+    else:
+        subset_costs = []
+        for i in range(len(test_list)):
+            new_set = set(test_list)
+            new_set.discard(end)
+            new_list = list(new_set)
+            if i != 0:
+                print_clinics(new_list)
+                subset_costs.append(calc_cost(new_list, test_list[i]) + calc_dist(end.lat, end.long, test_list[i].lat, test_list[i].long))
+        return min(subset_costs)
+
+
 # Clinic test cases set up
 queen_mary = Clinic("Queen Mary Hospital", 22.243243, 114.153765)
 hku_clinic = Clinic("HKU Clinic", 30, 80)
 central_clinic = Clinic("Central Clinic", 40, 120)
 kowloon_clinic = Clinic("Kowloon Clinic", 80, 60)
 airport_clinic = Clinic("Airport Clinic", 110, 150)
-clinic_list = [hku_clinic, central_clinic, kowloon_clinic, airport_clinic]
+clinic_list = [queen_mary, hku_clinic, central_clinic, kowloon_clinic, airport_clinic]
+another_list = [hku_clinic, central_clinic, kowloon_clinic, airport_clinic]
+
+costs = []
+for clinic in clinic_list:
+    if clinic.name == "Queen Mary Hospital":
+        continue
+    cost = calc_cost(clinic_list, clinic) + calc_dist(clinic.lat, clinic.long, queen_mary.lat, queen_mary.long)
+    costs.append(cost)
+
+optimal = min(costs)
+print(optimal)
+
 
 # Main program logic begins here
+clinic_list = [hku_clinic, central_clinic, kowloon_clinic, airport_clinic]
 all_routes = list(permutations(clinic_list))
 best_route = ()
 best_dist = float_info.max
