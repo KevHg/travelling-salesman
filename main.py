@@ -54,11 +54,13 @@ for route in all_routes:
 
 leg_list = []
 for i in range(len(best_route)):
-    leg = "(" + str(best_route[i - 1].lat) + "," + str(best_route[i].long) + "," + str(30) + ")"
+    leg = "(" + str(best_route[i - 1].name) + ")"
     leg_list.append(leg)
-leg_list.append("(22.269660,114.131303,163)")
+leg_list.append("(Queen Mary)")
 # End of main program
 
 # For print purposes only
 print(leg_list)
 print(best_dist)
+
+# Answer is ['(Central Clinic)', '(HKU Clinic)', '(Airport Clinic)', '(Kowloon Clinic)', '(Queen Mary)']
