@@ -35,16 +35,22 @@ def print_clinics(clinic_list):
 
 def calc_cost(test_list, end):
     if len(test_list) == 2:
-        return calc_dist(test_list[0].lat, test_list[0].long, test_list[1].lat, test_list[1].long)
+        val = calc_dist(test_list[0].lat, test_list[0].long, test_list[1].lat, test_list[1].long)
+        print(test_list[0].name, "to", test_list[1].name, ":", val)
+        return val
     else:
         subset_costs = []
-        for i in range(len(test_list)):
-            new_set = set(test_list)
-            new_set.discard(end)
-            new_list = list(new_set)
-            if i != 0:
-                print_clinics(new_list)
-                subset_costs.append(calc_cost(new_list, test_list[i]) + calc_dist(end.lat, end.long, test_list[i].lat, test_list[i].long))
+        new_list = []
+        for item in test_list:
+            if item.name != end.name:
+                new_list.append(item)
+
+        print("REMOVE - " + end.name)
+        print_clinics(new_list)
+
+        for item in test_list:
+            subset_costs.append(calc_cost(new_list, item) + calc_dist(end.lat, end.long, item.lat, item.long))
+
         return min(subset_costs)
 
 
@@ -61,7 +67,7 @@ costs = []
 for clinic in clinic_list:
     if clinic.name == "Queen Mary Hospital":
         continue
-    cost = calc_cost(clinic_list, clinic) + calc_dist(clinic.lat, clinic.long, queen_mary.lat, queen_mary.long)
+    cost = calc_cost(another_list, clinic) + calc_dist(clinic.lat, clinic.long, queen_mary.lat, queen_mary.long)
     costs.append(cost)
 
 optimal = min(costs)
